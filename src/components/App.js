@@ -1,17 +1,45 @@
+import { useContext } from 'react'
+import ClientDetails from './ClientDetails.js'
+import Dates from './Dates.js'
+import Footer from './Footer.js'
+import Header from './Header.js'
+import MainDetails from './MainDetails.js'
+import Notes from './Notes.js'
+import Table from './Table.js'
+import TableForm from './TableForm.js'
 import ReactToPrint from 'react-to-print'
-
-import ClientDetails from './components/ClientDetails.tsx'
-import Dates from './components/Dates.tsx'
-import Footer from './components/Footer.tsx'
-import Header from './components/Header.tsx'
-import MainDetails from './components/MainDetails.tsx'
-import Notes from './components/Notes.tsx'
-import Table from './components/Table.tsx'
-import TableForm from './components/TableForm.tsx'
-import { useInvoiceContext } from './context/InvoiceContext.tsx'
+import { DonateButton } from '../buttons'
 
 function App() {
-  const invoiceContext = useInvoiceContext()
+  const {
+    name,
+    setName,
+    address,
+    setAddress,
+    email,
+    setEmail,
+    phone,
+    setPhone,
+    bankName,
+    setBankName,
+    bankAccount,
+    setBankAccount,
+    website,
+    setWebsite,
+    clientName,
+    setClientName,
+    clientAddress,
+    setClientAddress,
+    invoiceNumber,
+    setInvoiceNumber,
+    invoiceDate,
+    setInvoiceDate,
+    dueDate,
+    setDueDate,
+    notes,
+    setNotes,
+    componentRef,
+  } = useContext(InvoiceContext)
 
   return (
     <>
@@ -25,20 +53,6 @@ function App() {
         <section>
           <div className="bg-white p-5 rounded shadow">
             <div className="flex flex-col justify-center">
-              {/* Add logo input */}
-              <article className="md:grid grid-cols-3 gap-10">
-                <div className="flex flex-col mb-4">
-                  <label htmlFor="logo">Company Logo</label>
-                  <input
-                    type="file"
-                    name="logo"
-                    id="logo"
-                    accept="image/*"
-                    onChange={invoiceContext.handleLogoChange}
-                  />
-                </div>
-              </article>
-
               <article className="md:grid grid-cols-2 gap-10">
                 <div className="flex flex-col">
                   <label htmlFor="name">Your full name</label>
@@ -49,8 +63,8 @@ function App() {
                     placeholder="Enter your name"
                     maxLength={56}
                     autoComplete="off"
-                    value={invoiceContext.name}
-                    onChange={(e) => invoiceContext.setName(e.target.value)}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                   />
                 </div>
 
@@ -63,8 +77,8 @@ function App() {
                     placeholder="Enter your address"
                     autoComplete="off"
                     maxLength={96}
-                    value={invoiceContext.address}
-                    onChange={(e) => invoiceContext.setAddress(e.target.value)}
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
                   />
                 </div>
               </article>
@@ -79,8 +93,8 @@ function App() {
                     placeholder="Enter your email"
                     maxLength={255}
                     autoComplete="off"
-                    value={invoiceContext.email}
-                    onChange={(e) => invoiceContext.setEmail(e.target.value)}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
 
@@ -93,8 +107,8 @@ function App() {
                     placeholder="Enter your website"
                     maxLength={96}
                     autoComplete="off"
-                    value={invoiceContext.website}
-                    onChange={(e) => invoiceContext.setWebsite(e.target.value)}
+                    value={website}
+                    onChange={(e) => setWebsite(e.target.value)}
                   />
                 </div>
 
@@ -107,8 +121,8 @@ function App() {
                     placeholder="Enter your phone"
                     maxLength={12}
                     autoComplete="off"
-                    value={invoiceContext.phone}
-                    onChange={(e) => invoiceContext.setPhone(e.target.value)}
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
                   />
                 </div>
               </article>
@@ -123,8 +137,8 @@ function App() {
                     placeholder="Enter your bank name"
                     maxLength={56}
                     autoComplete="off"
-                    value={invoiceContext.bankName}
-                    onChange={(e) => invoiceContext.setBankName(e.target.value)}
+                    value={bankName}
+                    onChange={(e) => setBankName(e.target.value)}
                   />
                 </div>
 
@@ -137,8 +151,8 @@ function App() {
                     placeholder="Enter your bank account number"
                     maxLength={20}
                     autoComplete="off"
-                    value={invoiceContext.bankAccount}
-                    onChange={(e) => invoiceContext.setBankAccount(e.target.value)}
+                    value={bankAccount}
+                    onChange={(e) => setBankAccount(e.target.value)}
                   />
                 </div>
               </article>
@@ -153,8 +167,8 @@ function App() {
                     placeholder="Enter your client's name"
                     maxLength={56}
                     autoComplete="off"
-                    value={invoiceContext.clientName}
-                    onChange={(e) => invoiceContext.setClientName(e.target.value)}
+                    value={clientName}
+                    onChange={(e) => setClientName(e.target.value)}
                   />
                 </div>
 
@@ -167,8 +181,8 @@ function App() {
                     placeholder="Enter your client's address"
                     maxLength={96}
                     autoComplete="off"
-                    value={invoiceContext.clientAddress}
-                    onChange={(e) => invoiceContext.setClientAddress(e.target.value)}
+                    value={clientAddress}
+                    onChange={(e) => setClientAddress(e.target.value)}
                   />
                 </div>
               </article>
@@ -182,22 +196,21 @@ function App() {
                     id="invoiceNumber"
                     placeholder="Invoice Number"
                     autoComplete="off"
-                    value={invoiceContext.invoiceNumber}
-                    onChange={(e) => invoiceContext.setInvoiceNumber(e.target.value)}
+                    value={invoiceNumber}
+                    onChange={(e) => setInvoiceNumber(e.target.value)}
                   />
                 </div>
 
                 <div className="flex flex-col">
                   <label htmlFor="invoiceDate">Invoice Date</label>
-
                   <input
                     type="date"
                     name="invoiceDate"
                     id="invoiceDate"
                     placeholder="Invoice Date"
                     autoComplete="off"
-                    value={invoiceContext.invoiceDate}
-                    onChange={(e) => invoiceContext.setInvoiceDate(e.target.value)}
+                    value={invoiceDate}
+                    onChange={(e) => setInvoiceDate(e.target.value)}
                   />
                 </div>
 
@@ -209,8 +222,8 @@ function App() {
                     id="dueDate"
                     placeholder="Invoice Date"
                     autoComplete="off"
-                    value={invoiceContext.dueDate}
-                    onChange={(e) => invoiceContext.setDueDate(e.target.value)}
+                    value={dueDate}
+                    onChange={(e) => setDueDate(e.target.value)}
                   />
                 </div>
               </article>
@@ -220,48 +233,22 @@ function App() {
                 <TableForm />
               </article>
 
-              {/*  tax calculation*/}
-              <article className="md:grid grid-cols-3 gap-10">
-                <div className="flex flex-col">
-                  <label htmlFor="isTaxEnabled">{`Include Tax? ${invoiceContext.isTaxEnabled ? 'Yes' : 'No'}`}</label>
-                  <input
-                    className="self-start w-5 h-5"
-                    type="checkbox"
-                    name="isTaxEnabled"
-                    id="isTaxEnabled"
-                    checked={invoiceContext.isTaxEnabled}
-                    onChange={(e) => invoiceContext.setIsTaxEnabled(e.target.checked)}
-                  />
-                </div>
-
-                {invoiceContext.isTaxEnabled && (
-                  <div className="flex flex-col">
-                    <label htmlFor="taxRate">Tax Rate (%)</label>
-                    <input
-                      type="number"
-                      name="taxRate"
-                      id="taxRate"
-                      placeholder="Enter tax rate"
-                      value={invoiceContext.taxRate}
-                      onChange={(e) => invoiceContext.setTaxRate(Number(e.target.value))}
-                    />
-                  </div>
-                )}
-              </article>
-
               <label htmlFor="notes">Additional Notes</label>
               <textarea
                 name="notes"
                 id="notes"
-                cols={30}
-                rows={10}
+                cols="30"
+                rows="10"
                 placeholder="Additional notes to the client"
                 maxLength={500}
-                value={invoiceContext.notes}
-                onChange={(e) => invoiceContext.setNotes(e.target.value)}
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
               ></textarea>
             </div>
           </div>
+          <article className="mt-5">
+            <DonateButton />
+          </article>
         </section>
 
         {/* Invoice Preview */}
@@ -272,9 +259,9 @@ function App() {
                 Print / Download
               </button>
             )}
-            content={() => invoiceContext.componentRef.current}
+            content={() => componentRef.current}
           />
-          <div ref={invoiceContext.componentRef} className="p-5">
+          <div ref={componentRef} className="p-5">
             <Header />
 
             <MainDetails />
