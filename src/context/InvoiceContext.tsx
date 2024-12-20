@@ -80,6 +80,13 @@ type TInvoiceContextProps = {
   logo: string | null
   setLogo: React.Dispatch<React.SetStateAction<string | null>>
   handleLogoChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  currency: string
+  setCurrency: React.Dispatch<React.SetStateAction<string>>
+  isDragging: boolean
+  setIsDragging: React.Dispatch<React.SetStateAction<boolean>>
+  handleDrop: (e: React.DragEvent<HTMLDivElement>) => void
+  handleDragOver: (e: React.DragEvent<HTMLDivElement>) => void
+  handleDragLeave: () => void
 }
 
 const InvoiceContext = createContext<TInvoiceContextProps | undefined>(undefined)
@@ -112,6 +119,8 @@ export const InvoiceProvider = ({ children }: Readonly<{ children: React.ReactNo
   const [showModal, setShowModal] = useState<boolean>(false)
   const [showLogoutModal, setShowLogoutModal] = useState<boolean>(false)
   const [logo, setLogo] = useState<string | null>(null)
+  const [isDragging, setIsDragging] = useState(false)
+  const [currency, setCurrency] = useState('USD')
 
   const componentRef = useRef<HTMLDivElement>(null)
 
@@ -161,6 +170,30 @@ export const InvoiceProvider = ({ children }: Readonly<{ children: React.ReactNo
     if (file) {
       reader.readAsDataURL(file)
     }
+  }
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    setIsDragging(false)
+    const file = e.dataTransfer.files[0]
+    const reader = new FileReader()
+    reader.onloadend = () => {
+      if (typeof reader.result === 'string') {
+        setLogo(reader.result)
+      }
+    }
+    if (file) {
+      reader.readAsDataURL(file)
+    }
+  }
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    setIsDragging(true)
+  }
+
+  const handleDragLeave = () => {
+    setIsDragging(false)
   }
 
   useEffect(() => {
@@ -266,6 +299,13 @@ export const InvoiceProvider = ({ children }: Readonly<{ children: React.ReactNo
       logo,
       setLogo,
       handleLogoChange,
+      currency,
+      setCurrency,
+      isDragging,
+      setIsDragging,
+      handleDrop,
+      handleDragOver,
+      handleDragLeave,
     }),
     [
       address,
@@ -298,6 +338,8 @@ export const InvoiceProvider = ({ children }: Readonly<{ children: React.ReactNo
       taxRate,
       taxAmount,
       logo,
+      currency,
+      isDragging,
     ]
   )
 

@@ -5,7 +5,7 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="footer border-t-2 border-gray-300 pt-5">
+      <footer className="footer border-gray-300 pt-5">
         <ul className="flex flex-wrap items-center justify-center">
           <li>
             <span className="font-bold">Your name:</span> {invoiceContext.name}

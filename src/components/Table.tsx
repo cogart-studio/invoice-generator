@@ -45,7 +45,7 @@ export default function Table() {
               <tr className="h-10">
                 <td>Tax</td>
                 <td>{`${invoiceContext.taxRate}%`}</td>
-                <td>₦ {invoiceContext.taxAmount.toLocaleString()}</td>
+                <td>{invoiceContext.taxAmount.toLocaleString()}</td>
               </tr>
             </tbody>
           </table>
@@ -54,7 +54,7 @@ export default function Table() {
 
       <div>
         <h2 className="flex items-end justify-end text-gray-800 text-4xl font-bold">
-          ₦ {invoiceContext.total.toLocaleString()}
+          {invoiceContext.currency} {invoiceContext.total.toLocaleString()}
         </h2>
       </div>
     </>

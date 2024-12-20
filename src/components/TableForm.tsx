@@ -105,7 +105,7 @@ export default function TableForm() {
 
       <div>
         <h2 className="flex items-end justify-end text-gray-800 text-4xl font-bold">
-          ₦ {invoiceContext.total.toLocaleString()}
+          {invoiceContext.currency} {invoiceContext.total.toLocaleString()}
         </h2>
       </div>
     </>
